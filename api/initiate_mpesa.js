@@ -11,6 +11,23 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 export default async function handler(req, res) {
+  // --- CORS HEADERS ADDED HERE ---
+  // These headers allow your local Flutter app to talk to the live Vercel server
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allows requests from any origin (including localhost)
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  // Handle the "pre-flight" OPTIONS request that Chrome sends before a POST request
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  // -------------------------------
+
   // Only allow POST requests
   if (req.method !== 'POST') return res.status(405).send('Method Not Allowed');
 
