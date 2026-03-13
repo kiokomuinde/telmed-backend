@@ -72,8 +72,9 @@ module.exports = async (req, res) => {
       PartyA: phone,
       PartyB: shortcode,
       PhoneNumber: phone,
-      CallBackURL: `https://${process.env.VERCEL_URL}/api/mpesa_webhook`, 
-      AccountReference: "datatricks@telmed.co.ke",
+      // 🚨 HARDCODED CALLBACK URL TO PREVENT SAFARICOM ROUTING ERRORS 🚨
+      CallBackURL: "https://telmed-backend.vercel.app/api/mpesa_webhook", 
+      AccountReference: "datatricks@telmed.co.ke", // Ensured correct business entity
       TransactionDesc: "Consultation Booking"
     }, {
       headers: { Authorization: `Bearer ${token}` }
